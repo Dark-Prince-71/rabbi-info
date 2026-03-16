@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rabbi Uddin Akanda</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Share+Tech+Mono&display=swap');
+
+body{
+  background:#000;
+  color:#fff;
+  font-family:'Share Tech Mono', monospace;
+  margin:0;
+  overflow-x:hidden;
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+  opacity:.35;
+}
+
+.container{
+  max-width:520px;
+  margin:auto;
+  padding:20px;
+}
+
+.profile{
+  text-align:center;
+  border:2px solid #00ff41;
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 0 20px #00ff41;
+  margin-bottom:20px;
+}
+
+.glitch{
+  font-family:'Orbitron';
+  color:#00ff41;
+  font-size:28px;
+  text-shadow:0 0 10px #00ff41;
+}
+
+.section{
+  margin-top:20px;
+  color:#b86bff;
+  font-family:'Orbitron';
+  text-shadow:0 0 10px #b86bff;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.card, .hobby{
+  background:rgba(0,255,65,.05);
+  border:1px solid rgba(0,255,65,.3);
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+  color:#00f7ff;
+  text-shadow:0 0 8px #00f7ff;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 0 5px #00ff41;
+}
+
+.card:hover, .hobby:hover{
+  transform:translateY(-5px);
+  box-shadow:0 0 20px #00ff41;
+}
+
+.card.active, .hobby.active{
+  background:#00ff41;
+  color:#000;
+  text-shadow:none;
+}
+
+.btn{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px;
+  border:1px solid #00ff41;
+  border-radius:10px;
+  text-decoration:none;
+  color:#fff;
+  margin-bottom:10px;
+  transition:0.3s;
+}
+
+.btn:hover{
+  background:#00ff41;
+  color:#000;
+}
+
+.terminal{
+  background:#000;
+  border:1px solid #333;
+  padding:15px;
+  border-radius:10px;
+  color:#00ff41;
+  font-size:12px;
+  height:120px;
+  overflow:hidden;
+}
+
+.visitor{
+  margin-top:10px;
+  font-size:12px;
+  color:#0f0;
+}
+
+.quote{
+  margin-top:20px;
+  border:1px dashed #00ff41;
+  padding:15px;
+  text-align:center;
+  color:#00ff41;
+}
+
+footer{
+  text-align:center;
+  margin-top:25px;
+  font-size:11px;
+  color:#888;
+}
+</style>
+</head>
+<body>
+<canvas id="matrix"></canvas>
+
+<div class="container">
+<div class="profile">
+<div class="glitch">Rabbi Uddin Akanda</div>
+<p>Nickname : <b style="color:#00ff41">Python</b></p>
+<!-- Visitor IP -->
+<div class="visitor" id="visitor">Loading IP...</div>
+</div>
+
+<div class="section">Identity</div>
+<div class="grid">
+<div class="card">Birth : 03 Feb 2005</div>
+<div class="card">Religion : Islam</div>
+<div class="card">Relationship : Single</div>
+<div class="card">Blood : A+</div>
+<div class="card">Division : Netrokona</div>
+<div class="card">Education : BSS</div>
+</div>
+
+<div class="section">My Hobbies</div>
+<div class="grid">
+<div class="hobby">Hacking</div>
+<div class="hobby">Moding</div>
+<div class="hobby">Gaming</div>
+<div class="hobby">Cracking</div>
+</div>
+
+<div class="section">Live Terminal</div>
+<div class="terminal" id="term">
+> Booting system...<br>
+> Loading modules...<br>
+> User verified...<br>
+</div>
+
+<div class="section">Social Media</div>
+<a class="btn" href="https://www.facebook.com/rjrabbiuddin25"><i class="fab fa-facebook"></i> Facebook</a>
+<a class="btn" href="https://wa.link/cjj1iu"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+<a class="btn" href="https://t.me/RjVipTeam"><i class="fab fa-telegram"></i> Telegram Channel</a>
+<a class="btn" href="https://t.me/Rjleader"><i class="fab fa-telegram"></i> Telegram ID</a>
+<a class="btn" href="https://t.me/RJ_Premium_apk"><i class="fas fa-robot"></i> Premium App</a>
+<a class="btn" href="https://youtube.com/@rjvipcreator?si=5zLX_nVl81h_fRaz"><i class="fab fa-youtube"></i> YouTube Channel</a>
+<a class="btn" href="https://www.instagram.com/rjrabbiuddin"><i class="fab fa-instagram"></i> Instagram</a>
+
+<div class="quote">
+"হ্যাকিং কোনো অপরাধ নয়, হ্যাকিং একটি শিল্প।<br>আর আমি সেই শিল্পের কারিগর।"
+</div>
+
+<footer>
+Developer by Rabbi © 2026
+</footer>
+</div>
+
+<script>
+// MATRIX EFFECT
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;
+const letters="01RABBI";
+const fontSize=16;
+const columns=canvas.width/fontSize;
+const drops=[];
+for(let x=0;x<columns;x++) drops[x]=1;
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#0f0";
+ctx.font=fontSize+"px monospace";
+for(let i=0;i<drops.length;i++){
+  const text=letters[Math.floor(Math.random()*letters.length)];
+  ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+  if(drops[i]*fontSize>canvas.height && Math.random()>0.975) drops[i]=0;
+  drops[i]++;
+}}
+setInterval(draw,33);
+
+// TERMINAL LOGS
+const term=document.getElementById("term");
+const logs=["> Running scripts","> Secure tunnel active","> Root access granted","> Masking IP","> Encryption enabled"];
+setInterval(()=>{
+  term.innerHTML+="<br>"+logs[Math.floor(Math.random()*logs.length)];
+  if(term.innerHTML.split('<br>').length>6){
+    term.innerHTML=term.innerHTML.split('<br>').slice(1).join('<br>');
+  }
+},2000);
+
+// VISITOR IP
+fetch("https://api.ipify.org?format=json")
+.then(res=>res.json())
+.then(data=>{
+document.getElementById("visitor").innerHTML="Visitor IP : "+data.ip;
+})
+.catch(err=>{
+document.getElementById("visitor").innerHTML="Visitor IP : Unable to fetch";
+});
+
+// CLICK EFFECT FOR CARDS & HOBBIES
+const cards=document.querySelectorAll('.card, .hobby');
+cards.forEach(card=>{
+  card.addEventListener('click',()=>{
+    card.classList.toggle('active');
+  });
+});
+</script>
+</body>
+</html>
